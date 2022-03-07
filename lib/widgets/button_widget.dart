@@ -16,7 +16,7 @@ class ButtonWidget extends StatelessWidget {
       body = (contentBody.name != null)
           ? Text(
               contentBody.name.toString(),
-              style: const TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 20),
             )
           : Icon(contentBody.iconData);
     } else {
@@ -36,13 +36,13 @@ class ButtonWidget extends StatelessWidget {
         (contentBodyBottom.name != null)
             ? Text(
                 contentBodyBottom.name.toString(),
-                style: const TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 20),
               )
             : Icon(contentBodyBottom.iconData),
       ]);
     }
     return Container(
-      margin: const EdgeInsets.all(2),
+      margin: const EdgeInsets.all(4),
       child: ElevatedButton(
         child: body,
         onPressed: () {

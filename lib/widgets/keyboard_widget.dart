@@ -13,8 +13,8 @@ class KeyboardWidget extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedH(
         crossAxisCount: 4,
-        mainAxisSpacing: 3.0,
-        crossAxisSpacing: 3.0,
+        // mainAxisSpacing: 4.0,
+        // crossAxisSpacing: 4.0,
         height: MediaQuery.of(context).size.height/10,
       ),
       itemCount: list.length,

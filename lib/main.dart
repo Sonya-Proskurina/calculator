@@ -1,4 +1,5 @@
 import 'package:calculator/bloc/calculator_bloc.dart';
+import 'package:calculator/parser.dart';
 import 'package:calculator/res/colors/colors.dart';
 import 'package:calculator/res/constants/constants_elements.dart';
 import 'package:calculator/widgets/keyboard_widget.dart';
@@ -6,11 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  runApp(const MyApp());
+  // Parser parser = Parser();
+  // parser.print("22+3-2*(2*5+2)*4");
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+   MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
