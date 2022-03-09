@@ -6,3 +6,5 @@ class AddElementEvent extends CalculatorEvent{
   String name;
   AddElementEvent({required this.name});
 }
+
+class LoadedEvent extends CalculatorEvent {}

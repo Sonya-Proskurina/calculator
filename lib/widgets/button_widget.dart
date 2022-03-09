@@ -1,9 +1,10 @@
 import 'package:calculator/bloc/calculator_bloc.dart';
-import 'package:calculator/entities/buttont_entities.dart';
 import 'package:calculator/res/colors/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../entities/buttons_entities.dart';
 
 class ButtonWidget extends StatelessWidget {
   ButtonEntities buttonEntities;

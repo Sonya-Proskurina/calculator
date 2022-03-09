@@ -118,15 +118,16 @@ List<Lexeme> lexAnalyze(String text) {
         continue;
       default:
         if (isNumber(c)) {
-          bool dot =false;
+          int dot =0;
          String num = "";
          do {
            num+=c;
-           if (c==".") dot = true;
+           if (c==".") dot ++;
            pos++;
+           if (dot>1) throw "ERROR";
            if (pos>=text.length) break;
            c = text[pos];
-         } while (isNumber(c)||c=="."&&!dot);
+         } while (isNumber(c)||c==".");
          list.add(Lexeme(type: LexemeType.NUMBER, value: num));
         } else {
           String val="";

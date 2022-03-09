@@ -1,5 +1,5 @@
 import 'package:calculator/bloc/calculator_bloc.dart';
-import 'package:calculator/parser.dart';
+import 'package:calculator/repository/calculator_repository.dart';
 import 'package:calculator/res/colors/colors.dart';
 import 'package:calculator/res/constants/constants_elements.dart';
 import 'package:calculator/widgets/keyboard_widget.dart';
@@ -7,25 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  // Parser parser = Parser();
-  // parser.print("22+3-2*(2*5+2)*4");
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        textTheme: const TextTheme(bodyText1: TextStyle(color: Colors.white)),
-      ),
       home: MultiBlocProvider(providers: [
-        BlocProvider<CalculatorBloc>(create: (context) => CalculatorBloc()),
+        BlocProvider<CalculatorBloc>(
+            create: (context) =>
+                CalculatorBloc(repository: CalculatorRepository())),
       ], child: const HomePage()),
     );
   }
@@ -36,6 +31,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<CalculatorBloc>().add(LoadedEvent());
     return Scaffold(
       backgroundColor: Colors.black,
       body: BlocBuilder<CalculatorBloc, CalculatorState>(
@@ -47,9 +43,8 @@ class HomePage extends StatelessWidget {
             margin: const EdgeInsetsDirectional.all(8),
             child: Column(
               children: [
-                const SizedBox(height: 128),
+                const Spacer(),
                 Container(
-                  height: 80,
                   padding: const EdgeInsetsDirectional.all(16),
                   margin: const EdgeInsetsDirectional.all(8),
                   decoration:
