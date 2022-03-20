@@ -13,14 +13,9 @@ class Parser {
   };
   
 String printText(String text) {
-  // String text = "22+3-2*(2*5+2)*4";
   print(text);
-  // for (int i = 0; i< lexAnalyze(text).length; i++) {
-  //   print(lexAnalyze(text)[i].type.name);
-  //   print(lexAnalyze(text)[i].value);
-  // }
+  print(lexAnalyze(text).toString());
   LexemeBuffer lexemeBuffer = LexemeBuffer(lexemes: lexAnalyze(text));
-  // print(expr(lexemeBuffer).toStringAsFixed(8));
   return expr(lexemeBuffer).toStringAsFixed(8);
 }
 
@@ -90,6 +85,9 @@ List<Lexeme> lexAnalyze(String text) {
     switch (c) {
       case '+':
         list.add(Lexeme(type: LexemeType.OP_PLUS, value: c));
+        pos++;
+        continue;
+      case ' ':
         pos++;
         continue;
       case '-':

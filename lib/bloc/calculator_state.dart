@@ -7,11 +7,13 @@ class CalculatorCleanState extends CalculatorState {
   String order;
   String mantissa;
   String signMantissa;
+  String res;
 
   CalculatorCleanState(
       {required this.list,
       required this.mantissa,
       required this.order,
+      required this.res,
       required this.signMantissa,});
 }
 

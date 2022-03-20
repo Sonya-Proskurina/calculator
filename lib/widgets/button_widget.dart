@@ -17,7 +17,7 @@ class ButtonWidget extends StatelessWidget {
       body = (contentBody.name != null)
           ? Text(
               contentBody.name.toString(),
-              style: const TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 16),
             )
           : Icon(contentBody.iconData);
     } else {
@@ -37,7 +37,7 @@ class ButtonWidget extends StatelessWidget {
         (contentBodyBottom.name != null)
             ? Text(
                 contentBodyBottom.name.toString(),
-                style: const TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 16),
               )
             : Icon(contentBodyBottom.iconData),
       ]);

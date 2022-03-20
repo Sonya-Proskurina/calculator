@@ -1,7 +1,7 @@
 import 'package:calculator/entities/result_entitites.dart';
 import 'package:flutter/material.dart';
 import '../entities/buttons_entities.dart';
-import '../parser.dart';
+import 'parser.dart';
 import '../res/colors/colors.dart';
 
 class CalculatorRepository {
@@ -13,6 +13,9 @@ class CalculatorRepository {
   bool other = false;
   int sizeMantissa = 1;
   int sizeOrder = 0;
+
+  String res=" ";
+  bool numInput = true;
 
   final List<ButtonEntities> _buttons = [
     ButtonEntities(buttons: [
@@ -102,11 +105,13 @@ class CalculatorRepository {
       modeEE = false;
       other = false;
       sizeMantissa = 1;
+      _buttons[2].fon = Colors.white10;
       sizeOrder = 0;
+      res =" ";
     }
     if (!other) {
-      if (modeEE == false) {
         if (isNumber(name)) {
+          numInput=true;
           if (!modeEE) {
             if (textMantissa.length == 1 && textMantissa[0] == "0") {
               textMantissa.remove("0");
@@ -131,10 +136,12 @@ class CalculatorRepository {
             }
           }
         }
+        if (modeEE == false) {
         switch (name) {
           case "e":
           case "\u{03C0}":
-            if (textMantissa.length == 1 && textMantissa[0] == "0") {
+            numInput = true;
+          if (textMantissa.length == 1 && textMantissa[0] == "0") {
               textMantissa.remove("0");
               sizeMantissa--;
             }
@@ -149,6 +156,7 @@ class CalculatorRepository {
             }
             break;
           case "del1":
+            numInput = true;
             sizeMantissa -= textMantissa[textMantissa.length - 1].length;
             textMantissa.removeLast();
             if (textMantissa.isEmpty) {
@@ -159,8 +167,14 @@ class CalculatorRepository {
           case "+/-":
             signMantissa = (signMantissa == "") ? "-" : "";
             break;
-
           case "^":
+            numInput = false;
+            if (sizeMantissa + 1 <= 8 &&
+                isNumber(textMantissa[textMantissa.length - 1])) {
+              textMantissa.add(name);
+              sizeMantissa += name.length;
+            }
+            break;
           case ".":
             if (sizeMantissa + 1 <= 8 &&
                 isNumber(textMantissa[textMantissa.length - 1])) {
@@ -172,7 +186,8 @@ class CalculatorRepository {
           case "-":
           case "/":
           case "*":
-            if (sizeMantissa + 1 <= 8 && textMantissa[0] != "0") {
+          numInput = false;
+          if (sizeMantissa + 1 <= 9 && textMantissa[0] != "0") {
               if (isNumber(textMantissa[textMantissa.length - 1]) ||
                   isEPi(textMantissa[textMantissa.length - 1])) {
                 textMantissa.add(name);
@@ -190,7 +205,8 @@ class CalculatorRepository {
           case "e^":
           case "ln":
           case "lg":
-            if (textMantissa.length == 1 && textMantissa[0] == "0") {
+          numInput = false;
+          if (textMantissa.length == 1 && textMantissa[0] == "0") {
               textMantissa.remove("0");
               sizeMantissa--;
             }
@@ -231,7 +247,16 @@ class CalculatorRepository {
         case "=":
           String otvet = "";
           try {
-            String bigO = Parser().printText(getLine(textMantissa));
+            res+=signMantissa+getLine(textMantissa);
+            if (textOrder.isNotEmpty) {
+              res+="*10^";
+              if (signOrder!=" ") {
+                res+="-";
+              }
+              res+=getLine(textOrder);
+            }
+            String bigO = Parser().printText(res);
+            print(double.tryParse(bigO));
             if (double.tryParse(bigO)! > 99999999) {
               otvet = "overflow";
             } else {
@@ -258,10 +283,38 @@ class CalculatorRepository {
           break;
         case "EE":
           modeEE = !modeEE;
+          if (modeEE) {
+            _buttons[2].fon =MyColors.orange;
+          } else {
+            _buttons[2].fon = MyColors.whiteP;
+          }
           break;
       }
     }
-    return ResultEntities(_buttons, getLine(textMantissa),
+    if (!numInput&&textMantissa[0]!="0") {
+      if(signMantissa.isNotEmpty) {
+        res+="-";
+        signMantissa="";
+      }
+      res += getLine(textMantissa);
+      textMantissa=["0"];
+      sizeMantissa = 1;
+      numInput=true;
+      if (textOrder.isNotEmpty) {
+        String s = res[res.length-1];
+        res =res.substring(0, res.length - 1);
+        res+="*10^";
+        if (signOrder!=" ") {
+          res+="-";
+        }
+        res+=getLine(textOrder);
+        textOrder=[];
+        signOrder = " ";
+        sizeOrder=0;
+        res+=s;
+      }
+    }
+    return ResultEntities(res, _buttons, numInput, getLine(textMantissa),
         getLineOrder(textOrder, modeEE, signOrder), signMantissa);
   }
 
@@ -285,7 +338,7 @@ class CalculatorRepository {
 
   String getLineOrder(List<String> list, bool modeEE, String signOrder) {
     String line = "";
-    if (modeEE) line = "E";
+    if (list.isNotEmpty) line = "E";
     line += signOrder;
     line += getLine(list);
     while (line.length < 4) {

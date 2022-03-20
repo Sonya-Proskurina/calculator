@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:calculator/bloc/calculator_bloc.dart';
 import 'package:calculator/repository/calculator_repository.dart';
 import 'package:calculator/res/colors/colors.dart';
@@ -33,7 +34,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<CalculatorBloc>().add(LoadedEvent());
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: MyColors.black,
       body: BlocBuilder<CalculatorBloc, CalculatorState>(
           builder: (context, state) {
         if (state is CalculatorLoadingState) {
@@ -44,67 +45,85 @@ class HomePage extends StatelessWidget {
             child: Column(
               children: [
                 const Spacer(),
-                Container(
-                  padding: const EdgeInsetsDirectional.all(16),
-                  margin: const EdgeInsetsDirectional.all(8),
-                  decoration:
-                      BoxDecoration(border: Border.all(color: MyColors.grey)),
-                  child: Row(
-                    children: [
-                      Stack(alignment: Alignment.centerRight, children: [
-                        const Text(
-                          "8",
-                          style: TextStyle(
-                              fontFamily: "Seven",
-                              fontSize: 45,
-                              color: Colors.white10),
-                        ),
-                        Text(
-                          state.signMantissa,
-                          style: const TextStyle(
-                              fontFamily: "Seven",
-                              fontSize: 45,
-                              color: Colors.deepOrangeAccent),
-                        ),
-                      ]),
-                      const Spacer(),
-                      Stack(alignment: Alignment.centerRight, children: [
-                        const Text(
-                          "88888888",
-                          style: TextStyle(
-                              fontFamily: "Seven",
-                              fontSize: 45,
-                              color: Colors.white10),
-                        ),
-                        Text(
-                          state.mantissa,
-                          style: const TextStyle(
-                              fontFamily: "Seven",
-                              fontSize: 45,
-                              color: Colors.deepOrangeAccent),
-                        ),
-                      ]),
-                      const SizedBox(width: 8),
-                      Stack(alignment: Alignment.topRight, children: [
-                        const Text(
-                          "8888",
-                          style: TextStyle(
-                              fontFamily: "Seven",
-                              fontSize: 20,
-                              color: Colors.white10),
-                        ),
-                        Text(
-                          state.order,
-                          style: const TextStyle(
-                              fontFamily: "Seven",
-                              fontSize: 20,
-                              color: Colors.deepOrangeAccent),
-                        ),
-                      ]),
-                    ],
-                  ),
+               Container(
+                    padding: const EdgeInsetsDirectional.all(16),
+                    // decoration:
+                    // BoxDecoration(border: Border.all(color: MyColors.grey)),
+                    margin: const EdgeInsetsDirectional.all(8),
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      // child: Expanded(
+                        child: AutoSizeText(
+                            state.res,
+                            style: const TextStyle(
+                                fontFamily: "Seven",
+                                fontSize: 20,
+                                color:MyColors.orange),
+                          ),
+                      // ),
+                    ),
                 ),
-                Expanded(flex: 2, child: KeyboardWidget(list: state.list)),
+                 Container(
+                    padding: const EdgeInsetsDirectional.all(16),
+                    margin: const EdgeInsetsDirectional.all(8),
+                    decoration:
+                        BoxDecoration(border: Border.all(color: MyColors.grey)),
+                    child: Row(
+                      children: [
+                        Stack(alignment: Alignment.centerRight, children: [
+                          const Text(
+                            "8",
+                            style: TextStyle(
+                                fontFamily: "Seven",
+                                fontSize: 45,
+                                color:MyColors.whiteP),
+                          ),
+                          Text(
+                            state.signMantissa,
+                            style: const TextStyle(
+                                fontFamily: "Seven",
+                                fontSize: 45,
+                                color: MyColors.orange),
+                          ),
+                        ]),
+                        const Spacer(),
+                        Stack(alignment: Alignment.centerRight, children: [
+                          const Text(
+                            "88888888",
+                            style: TextStyle(
+                                fontFamily: "Seven",
+                                fontSize: 45,
+                                color: MyColors.whiteP),
+                          ),
+                          Text(
+                            state.mantissa,
+                            style: const TextStyle(
+                                fontFamily: "Seven",
+                                fontSize: 45,
+                                color: MyColors.orange),
+                          ),
+                        ]),
+                        const SizedBox(width: 8),
+                        Stack(alignment: Alignment.topRight, children: [
+                          const Text(
+                            "8888",
+                            style: TextStyle(
+                                fontFamily: "Seven",
+                                fontSize: 20,
+                                color: MyColors.whiteP),
+                          ),
+                          Text(
+                            state.order,
+                            style: const TextStyle(
+                                fontFamily: "Seven",
+                                fontSize: 20,
+                                color: MyColors.orange),
+                          ),
+                        ]),
+                      ],
+                    ),
+                  ),
+                Flexible(flex: 4, child: KeyboardWidget(list: state.list)),
               ],
             ),
           );

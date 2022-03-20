@@ -3,6 +3,8 @@ class ResultEntities {
   List<ButtonEntities> list;
   String mantissa;
   String order;
+  String res;
   String signMantissa;
-  ResultEntities(this.list, this.mantissa, this.order, this.signMantissa);
+  bool numInput;
+  ResultEntities(this.res, this.list, this.numInput, this.mantissa, this.order, this.signMantissa);
 }
