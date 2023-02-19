@@ -1,16 +1,19 @@
-# calculator
+# A simple calculator on flutter
 
-A new Flutter project.
+## Functional 
 
-## Getting Started
+- +, -, *, /
+- Trigonometric functions: sin, cos, tg, ctg, asin, acos, atg, act
+- e^x, 10^x, x^y
+- lnx, lgx
+- Constants: pi, e
+- Exponential notation of numbers
 
-This project is a starting point for a Flutter application.
+## Technologies
 
-A few resources to get you started if this is your first Flutter project:
+- flutter_bloc: ^8.0.0
+- get_it
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Demonstration of the work
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Screenrecorder-2023-02-19-17-54-38-448](https://user-images.githubusercontent.com/55708191/219956633-3192dcf9-6dc9-4c60-9233-aec11d5fd7f9.gif)
